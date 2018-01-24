@@ -1,0 +1,1 @@
+The original data has been used from the file "Table_10.1_Renewable_Energy_Production_and_Consumption_by_Source", which has been transferred to "SolarC" and used in R.

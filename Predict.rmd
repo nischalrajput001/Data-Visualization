@@ -1,0 +1,41 @@
+
+```{r}
+library(ggplot2)
+library(dplyr)
+#reding ontents of csv into dataframe named df
+df <- read.csv('SolarC.csv')
+head(df)
+z <- lm(log(Sec)~ï..Year, data = df)
+p <- ggplot(data=df,aes(x= ï..Year,y=Sec)) 
+
+p + geom_point() + 
+geom_smooth(method='loess') 
+ 
+
+ï..Year <- c(2017,2018,2019,2020,2021,2022,2023,2024,2025) # Our new x
+
+y=exp(predict(z,data.frame(ï..Year)))
+
+fdfs=data.frame(ï..Year,y)
+
+add_btu <- function(x){
+
+  paste(x,"BTU", sep=' ')
+}
+
+p + geom_point(data = df, aes(x = ï..Year, y = Sec),color='yellow3') + 
+  geom_smooth(data = df, aes(x = ï..Year, y = Sec),color='yellow') +
+  geom_point(data = fdfs, aes(x = ï..Year, y = y),color='slateblue4') + 
+  geom_smooth(data = fdfs, aes(x = ï..Year, y = y), color = "slateblue") +
+      scale_color_manual(values = c("slateblue"), guide = guide_legend(title = "Prediction")) +
+  labs(x='Year', y='Solar Energy Consumption (In Trillions)') +
+  ggtitle('A Prediction For Solar Consumption') +
+  theme(panel.background = element_rect(fill = "gray98"))+
+  scale_y_continuous(labels=add_btu) +
+  scale_x_continuous(breaks=seq(1984,2025,by=5))
+```
+
+
+
+
+
